@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    
+
+</head>
+<body>
+    <div style="margin-right: 20%;margin-left: 20%;margin-top: 5%;margin-bottom: 10%;" class="card bg-dark text-white">
+        <img  src="../../assets/image/How.png" class="card-img" alt="...">
+        <div class="card-img-overlay">
+            <span style="font-style: italic;color: rgb(255, 255, 255);font-weight: bolder;font-size: x-large;"><h1 class="animate__animated animate__backInLeft">Welcome {{name}}</h1></span>
+
+      
+      
+      <ng-container *ngIf="!isQuizCompleted">
+        <div class="d-flex justify-content-around py-3">
+            <div class="score">
+                <h5>{{points}} Points</h5>
+            </div>
+            <div class="question-remain">
+                <span style="font-style: italic;">Question {{currentQuestion+1}} of {{questionList.length}}</span>
+            </div>
+            <div class="timer">
+                <h5>{{counter}} sec ⏱</h5>
+            </div>
+        </div>
+        <div class="progress mb-3">
+            <div  class="progress-bar progress-bar-striped bg-success" role="progressbar" [ngStyle]="{'width':progress+'%'}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <div>
+            <div>
+                <h3 style="background-color: transparent;">{{questionList[currentQuestion]?.questionText}}</h3>
+            </div>
+        </div>
+        <div>
+            <ol style="background-color: transparent;cursor: pointer;" *ngFor="let option of questionList[currentQuestion]?.options">
+                <li style="list-style-type: none;" (click)="answer(currentQuestion+1,option)">
+                    <div appChangeBg [isCorrect]="option.correct">
+                        {{option.text}}
+                    </div>
+                </li>
+
+            </ol>
+        </div>
+        <div style="padding-top: 100px;" class="d-flex justify-content-between">
+            <button style="background-color: white;color:black;padding-right: 50px;padding-left: 50px;" [disabled]="currentQuestion===0" class="btn" (click)="previousQuestion()">previous</button>
+            <button style="background-color: white;color:black;padding-right: 50px;padding-left: 50px;" class="btn" (click)="resetQuiz()">reset</button>
+            <button style="background-color: white;color:black;padding-right: 50px;padding-left: 50px;" class="btn" (click)="nextQuestion()">next</button>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="isQuizCompleted">
+        <div class="row d-flex justify-content-between">
+            <img style="width: 50%;" class="img-fluid col-sm-12 mx-auto" src="https://icon-library.com/images/celebration-icon-png/celebration-icon-png-7.jpg" alt="">
+            <div class="result text-center col-md-6 col-sm-12">
+                <h3>Congratulations!! <br>You have completed the quiz. <br>Below is your result:</h3>
+                <p>Total Question Attempted : {{questionList.length}} </p>
+                <p>Total Correct Answered : {{correctAnswer}} </p>
+                <p>Total Wrong Answered : {{inCorrectAnswer}} </p>
+                <p>Your Score : {{points}} Points </p>
+            </div>
+        </div>
+        <button style="background-color: transparent;float: right;border-radius: 1.3em;" routerLink="/acceuil"><svg width="63" height="63" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="m15 6-6 6 6 6V6Z"></path>
+            </svg></button>
+    </ng-container>
+
+    </div>
+
+</div>
+
+ 
+    
+</body>
+</html>
